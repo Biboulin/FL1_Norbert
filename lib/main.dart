@@ -1,4 +1,5 @@
 import 'package:FL1_Norbert/views/home.dart';
+import 'package:FL1_Norbert/views/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
