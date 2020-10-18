@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:FL1_Norbert/views/walkthrough.dart';
 import 'package:FL1_Norbert/views/utils/colors.dart';

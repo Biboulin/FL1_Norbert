@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavBarWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => null,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: redFloatingButton,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -14,24 +14,24 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
 
   final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
 
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.check_circle),
-      title: const Text('Mes tâches'),
+      label: 'Mes tâches',
     ),
 
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.dashboard),
-      title: const Text('Menu'),
+      label: 'Menu',
     ),
 
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.event_note),
-      title: const Text('Notes'),
+      label:'Notes',
     ),
 
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.person),
-      title: const Text('Profil'),
+      label: 'Profil',
     ),
 
   ];
