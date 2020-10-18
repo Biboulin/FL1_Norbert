@@ -1,12 +1,16 @@
+import 'package:FL1_Norbert/views/walkthrough/walkthrough.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:FL1_Norbert/views/walkthrough.dart';
 import 'package:FL1_Norbert/views/utils/colors.dart';
 
 class Welcome extends StatefulWidget {
-  const Welcome({
-    Key key,
+  const Welcome(
+    this.handleRedirectHome,
+    {
+      Key key,
   }) : super(key: key);
+
+  final Function handleRedirectHome;
 
   @override
   _WelcomeState createState() => _WelcomeState();
@@ -72,7 +76,15 @@ class _WelcomeState extends State<Welcome> {
                 ),
               ),
             ),
-          )
+          ),
+          if (currentIndexPage == 2)
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.8,
+                child: TextButton(
+                  onPressed: () => widget.handleRedirectHome(),
+                  child: const Text('Continuer'),
+                ),
+              ),
         ],
       ),
     );
