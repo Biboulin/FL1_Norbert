@@ -13,7 +13,7 @@ class CreateElementPopup extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => null,
-              child: const Text('new task'),
+              child: const Text('Nouvelle tâche'),
             ),
           ),
 
@@ -21,7 +21,7 @@ class CreateElementPopup extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => null,
-              child: const Text('new element'),
+              child: const Text('Nouvelle note'),
             ),
           ),
 
@@ -29,7 +29,7 @@ class CreateElementPopup extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => null,
-              child: const Text('new event'),
+              child: const Text('Nouvelle check-list'),
             ),
           ),
 
