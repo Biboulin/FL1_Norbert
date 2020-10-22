@@ -1,33 +1,18 @@
 class Task {
-  String id;
-  String title;
-  String description;
-  String color;
-  List<Item> items;
-  String image;
-  DateTime dueDate;
-  bool isDone;
-  String userId;
-  String typId;
-  List<String> attachedUserIds;
-  String attachedProjectId;
-  List<String> commentIds;
-
-  Task({
-    this.id,
-    this.title,
-    this.description,
-    this.color,
-    this.items,
-    this.image,
-    this.dueDate,
-    this.isDone,
-    this.userId,
-    this.typId,
-    this.attachedUserIds,
-    this.attachedProjectId,
-    this.commentIds
-  });
+  Task(
+      {this.id,
+      this.title,
+      this.description,
+      this.color,
+      this.items,
+      this.image,
+      this.dueDate,
+      this.isDone,
+      this.userId,
+      this.typId,
+      this.attachedUserIds,
+      this.attachedProjectId,
+      this.commentIds});
 
   Task.fromJson(Map<String, dynamic> json) {
     id = json['id'] as String;
@@ -49,6 +34,20 @@ class Task {
     attachedProjectId = json['_forProject'] as String;
     commentIds = json['_comments'].cast<String>() as List<String>;
   }
+
+  String id;
+  String title;
+  String description;
+  String color;
+  List<Item> items;
+  String image;
+  DateTime dueDate;
+  bool isDone;
+  String userId;
+  String typId;
+  List<String> attachedUserIds;
+  String attachedProjectId;
+  List<String> commentIds;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -72,15 +71,15 @@ class Task {
 }
 
 class Item {
-  String title;
-  bool done;
-
   Item({this.title, this.done});
 
   Item.fromJson(Map<String, dynamic> json) {
     title = json['title'] as String;
     done = json['done'] as bool;
   }
+
+  String title;
+  bool done;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

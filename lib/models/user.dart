@@ -1,27 +1,15 @@
 class User {
-  String id;
-  String firstName;
-  String lastName;
-  String email;
-  String password;
-  String accessToken;
-  String firebaseId;
-  String image;
-  List<String> taskIds;
-  List<String> projectIds;
-
-  User({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.password,
-    this.accessToken,
-    this.firebaseId,
-    this.image,
-    this.taskIds,
-    this.projectIds
-  });
+  User(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.password,
+      this.accessToken,
+      this.firebaseId,
+      this.image,
+      this.taskIds,
+      this.projectIds});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'] as String;
@@ -45,6 +33,17 @@ class User {
       });
     }
   }
+
+  String id;
+  String firstName;
+  String lastName;
+  String email;
+  String password;
+  String accessToken;
+  String firebaseId;
+  String image;
+  List<String> taskIds;
+  List<String> projectIds;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

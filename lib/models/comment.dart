@@ -1,9 +1,4 @@
 class Comment {
-  String id;
-  DateTime createdAt;
-  String creatorId;
-  String content;
-
   Comment({this.id, this.createdAt, this.creatorId, this.content});
 
   Comment.fromJson(Map<String, dynamic> json) {
@@ -12,6 +7,11 @@ class Comment {
     creatorId = json['_creator'] as String;
     content = json['content'] as String;
   }
+
+  String id;
+  DateTime createdAt;
+  String creatorId;
+  String content;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
