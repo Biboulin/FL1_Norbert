@@ -15,3 +15,4 @@ const Color redFloatingButton = Color(0xFFFC817C);
 // Text Colors
 const Color blackMaintitles = Color(0xFF6696BB);
 const Color greySubtitles = Color(0xFF9dadbc);
+const Color greyDateCards = Color(0xff757575);
