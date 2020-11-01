@@ -1,5 +1,6 @@
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/home/create_element_popup.dart';
+import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,10 +16,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _selectedIndex = 0;
-  PageController _pageController;
 
   final List<Widget> _views = <Widget>[
-    const Center(child: Text('toto')),
+    TasksView(),
     const Center(child: Text('yo')),
     const Center(child: Text('salut')),
     const Center(child: Text('ahdzk')),
@@ -44,18 +44,6 @@ class _HomeState extends State<Home> {
   ];
 
   @override
-  void initState() {
-    _pageController = PageController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -67,11 +55,6 @@ class _HomeState extends State<Home> {
         currentIndex: _selectedIndex,
         onTap: (int index) => setState(() {
           _selectedIndex = index;
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut
-          );
         }),
       ),
       floatingActionButton: FloatingActionButton(
@@ -85,11 +68,7 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: SizedBox.expand(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (int index) => setState(() => _selectedIndex = index),
-            children: _views,
-          ),
+          child: _views[_selectedIndex],
         ),
       ),
     );
