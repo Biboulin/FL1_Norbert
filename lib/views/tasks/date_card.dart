@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class DateCard extends StatelessWidget {
-
   const DateCard(this._date);
 
   final DateTime _date;
@@ -13,7 +12,7 @@ class DateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        DateFormat.yMMMMd().format(_date).toString(),
+        DateFormat.yMMMMd('fr_FR').format(_date).toString(),
         style: const TextStyle(
           color: greyDateCards,
         ),
