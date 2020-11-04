@@ -15,14 +15,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedIndex = 0;
 
   final List<Widget> _views = <Widget>[
     TasksView(),
-    const Center(child: Text('yo')),
-    const Center(child: Text('salut')),
-    const Center(child: Text('ahdzk')),
+    const Center(child: Text('menu')),
+    const Center(child: Text('notes')),
+    const Center(child: Text('profil')),
+    const Center(child: Text('new task')),
+    const Center(child: Text('new note')),
+    const Center(child: Text('new checkList')),
   ];
 
   final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
@@ -30,6 +32,9 @@ class _HomeState extends State<Home> {
     null,
     null,
     null,
+    null,
+    null,
+    null
   ];
 
   final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
@@ -43,7 +48,7 @@ class _HomeState extends State<Home> {
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.event_note),
-      label:'Notes',
+      label: 'Notes',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.person),
@@ -61,16 +66,18 @@ class _HomeState extends State<Home> {
         selectedItemColor: whiteSelectedIcon,
         unselectedItemColor: greyUnselectedIcon,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex <= 3 ? _selectedIndex : 0,
         onTap: (int index) => setState(() {
           _selectedIndex = index;
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<CreateElementPopup>(
-          context: context,
-          child: CreateElementPopup(),
-        ),
+        onPressed: () {
+          showDialog<int>(
+            context: context,
+            child: CreateElementPopup(),
+          ).then((int index) => setState(() => _selectedIndex = index));
+        },
         child: const Icon(Icons.add),
         backgroundColor: blue,
       ),
