@@ -34,7 +34,7 @@ class TaskCard extends StatelessWidget {
                     ),
               onPressed: () {
                 _task.isDone = !_task.isDone;
-                // TODO edit task in db
+                // TODO(thib): edit task in db
                 context.read<Data>().notify();
               },
             ),
@@ -69,7 +69,7 @@ class TaskCard extends StatelessWidget {
             color: Colors.grey[350],
             icon: Icons.edit,
             onTap: () {
-              // TODO edit task
+              // TODO(thib): edit task
               print('Modifier');
             },
           ),
@@ -77,7 +77,7 @@ class TaskCard extends StatelessWidget {
             color: Colors.red,
             icon: Icons.delete,
             onTap: () {
-              // TODO Delete task in db
+              // TODO(thib): Delete task in db
               context.read<Data>().delTasks(<Task>[_task]);
               Scaffold.of(context).showSnackBar(
                   const SnackBar(content: Text('Tâche supprimée')));
