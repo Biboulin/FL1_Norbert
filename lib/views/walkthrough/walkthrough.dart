@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:FL1_Norbert/views/walkthrough/svg_utils.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/auth/login.dart';
 import 'package:FL1_Norbert/views/auth/register.dart';
@@ -32,7 +31,6 @@ class Walkthrough extends StatefulWidget {
 class _WalkthroughState extends State<Walkthrough> {
   @override
   Widget build(BuildContext context) {
-    final int _idx = widget.nbPage;
     return Scaffold(
       extendBody: true,
       body: Stack(

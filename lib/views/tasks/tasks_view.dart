@@ -15,7 +15,7 @@ class TasksView extends StatefulWidget {
 class _TasksViewState extends State<TasksView> {
   final List<Widget> _displayList = <Widget>[];
   CalendarController _calendarController;
-  Map<DateTime, List<String>> _events = <DateTime, List<String>>{};
+  final Map<DateTime, List<String>> _events = <DateTime, List<String>>{};
 
   @override
   void initState() {

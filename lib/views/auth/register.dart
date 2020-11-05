@@ -390,14 +390,19 @@ class _RegisterState extends State<Register> {
                                     'accessToken': tmp.user.refreshToken,
                                   };
 
-                                  CollectionReference users = FirebaseFirestore
-                                      .instance
-                                      .collection('users');
+                                  final CollectionReference users =
+                                      FirebaseFirestore.instance
+                                          .collection('users');
+
                                   users.add(usrData).then(
-                                      (DocumentReference value) =>
-                                          print(value.id));
-                                  user.User currentUser =
+                                        (DocumentReference value) =>
+                                            print(value.id),
+                                      );
+
+                                  // Save current user to provider
+                                  final user.User currentUser =
                                       user.User.fromJson(usrData);
+
                                   Navigator.push<Widget>(
                                     context,
                                     MaterialPageRoute<Widget>(

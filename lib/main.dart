@@ -11,7 +11,7 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Future.wait([
+  Future.wait(<Future<void>>[
     precachePicture(
         ExactAssetPicture(
             SvgPicture.svgStringDecoder, 'assets/images/draw_1.svg'),

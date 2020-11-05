@@ -1,11 +1,8 @@
 import 'package:FL1_Norbert/utils/colors.dart';
-import 'package:FL1_Norbert/views/walkthrough/walkthrough_old.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:FL1_Norbert/views/walkthrough/walkthrough.dart';
-import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/walkthrough/svg_utils.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome(

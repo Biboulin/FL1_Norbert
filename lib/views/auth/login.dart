@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
         builder: (BuildContext context) {
           return Center(
             child: Column(
-              children: [
+              children: <Widget>[
                 SizedBox(
                   width: double.infinity,
                   child: Container(
@@ -203,7 +203,7 @@ class _LoginState extends State<Login> {
                               if (_formKey.currentState.validate() &&
                                   _validForm) {
                                 try {
-                                  UserCredential userCredential =
+                                  final UserCredential userCredential =
                                       await FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
                                     email: emailController.text,
@@ -216,7 +216,6 @@ class _LoginState extends State<Login> {
                                           const Home(),
                                     ),
                                   );
-                                  //widget.handleRedirectHome();
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'user-not-found') {
                                     errorMsg =
