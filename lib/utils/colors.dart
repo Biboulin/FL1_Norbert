@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 /// Theme color
+const Color white = Color(0xFFFFFFFF);
 const Color red = Color(0xFFF96060);
 const Color blue = Color(0xFF0096DA);
 const Color grey = Color(0xFF313131);
+const Color borderGrey = Color(0xFF979797);
 const Color darkBlue = Color(0xFF6696BB);
 
 /// Colors for Bottom Nav Bar

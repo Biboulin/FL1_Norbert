@@ -1,0 +1,21 @@
+{
+    "id": "",
+    "title": "task title",
+    "description": "desc",
+    "color": "",
+    "items": [
+        {
+            "title": "",
+            "done": false
+        }
+    ],
+    "image": "base64Img",
+    "dueDate": "",
+    "isDone": false,
+    "_user": "",
+    "_type": 0,
+    "_forUser": ["userIds"],
+    "_forProject": "projectsIds",
+    "_comments": ["commentsIds"]
+
+}
