@@ -8,31 +8,27 @@ class CreateElementPopup extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Container>[
-
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => null,
-              child: const Text('new task'),
+              onPressed: () => Navigator.pop(context, 4),
+              child: const Text('Nouvelle tâche'),
             ),
           ),
-
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => null,
-              child: const Text('new element'),
+              onPressed: () => Navigator.pop(context, 5),
+              child: const Text('Nouvelle note'),
             ),
           ),
-
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => null,
-              child: const Text('new event'),
+              onPressed: () => Navigator.pop(context, 6),
+              child: const Text('Nouvelle check-list'),
             ),
           ),
-
         ],
       ),
     );

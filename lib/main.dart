@@ -1,9 +1,12 @@
+import 'package:FL1_Norbert/models/data.dart';
 import 'package:FL1_Norbert/views/view_selection.dart';
 import 'package:FL1_Norbert/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +38,18 @@ void main() {
         null)
   ]);
 
-  runApp(MyApp());
+  initializeDateFormatting().then(
+    (_) => runApp(
+      MultiProvider(
+        providers: <ChangeNotifierProvider<Data>>[
+          ChangeNotifierProvider<Data>(create: (_) => Data()),
+        ],
+        child: MyApp(),
+      ),
+    ),
+  );
 }
+//runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();

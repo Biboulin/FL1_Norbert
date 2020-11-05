@@ -1,5 +1,7 @@
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/home/create_element_popup.dart';
+import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
+import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,15 +15,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedIndex = 0;
-  PageController _pageController;
 
   final List<Widget> _views = <Widget>[
-    const Center(child: Text('toto')),
-    const Center(child: Text('yo')),
-    const Center(child: Text('salut')),
-    const Center(child: Text('ahdzk')),
+    TasksView(),
+    const Center(child: Text('menu')),
+    const Center(child: Text('notes')),
+    const Center(child: Text('profil')),
+    const Center(child: Text('new task')),
+    const Center(child: Text('new note')),
+    const Center(child: Text('new checkList')),
+  ];
+
+  final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
+    TaskAppBar(),
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
   ];
 
   final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
@@ -35,7 +48,7 @@ class _HomeState extends State<Home> {
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.event_note),
-      label:'Notes',
+      label: 'Notes',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.person),
@@ -44,52 +57,34 @@ class _HomeState extends State<Home> {
   ];
 
   @override
-  void initState() {
-    _pageController = PageController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _appBars[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: _items,
         backgroundColor: blueBottomNavBar,
         selectedItemColor: whiteSelectedIcon,
         unselectedItemColor: greyUnselectedIcon,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex <= 3 ? _selectedIndex : 0,
         onTap: (int index) => setState(() {
           _selectedIndex = index;
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut
-          );
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<CreateElementPopup>(
-          context: context,
-          child: CreateElementPopup(),
-        ),
+        onPressed: () {
+          showDialog<int>(
+            context: context,
+            child: CreateElementPopup(),
+          ).then((int index) => setState(() => _selectedIndex = index));
+        },
         child: const Icon(Icons.add),
         backgroundColor: blue,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
         child: SizedBox.expand(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (int index) => setState(() => _selectedIndex = index),
-            children: _views,
-          ),
+          child: _views[_selectedIndex],
         ),
       ),
     );
