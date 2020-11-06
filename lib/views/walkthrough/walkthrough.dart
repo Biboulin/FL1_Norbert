@@ -43,7 +43,7 @@ class _WalkthroughState extends State<Walkthrough> {
                   child: widget.mainAsset,
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 40),
+                  margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     widget.mainText,
                     style: const TextStyle(
@@ -55,7 +55,6 @@ class _WalkthroughState extends State<Walkthrough> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 5),
                   child: Text(
                     widget.secondaryText,
                     style: const TextStyle(
@@ -75,7 +74,9 @@ class _WalkthroughState extends State<Walkthrough> {
           ),
           Container(
             alignment: Alignment.bottomCenter,
-            margin: const EdgeInsets.only(bottom: 130),
+            margin: const EdgeInsets.only(
+              bottom: 110,
+            ),
             child: Container(
               decoration: const BoxDecoration(
                 boxShadow: <BoxShadow>[
@@ -118,7 +119,9 @@ class _WalkthroughState extends State<Walkthrough> {
           ),
           Container(
             alignment: Alignment.bottomCenter,
-            margin: const EdgeInsets.only(bottom: 75),
+            margin: const EdgeInsets.only(
+              bottom: 55,
+            ),
             child: TextButton(
               onPressed: () {
                 Navigator.push(
