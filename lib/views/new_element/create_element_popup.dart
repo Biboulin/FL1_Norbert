@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/views/new_element/create_task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,21 +12,21 @@ class CreateElementPopup extends StatelessWidget {
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context, 4),
+              onPressed: () => Navigator.pop(context, CreateTask()),
               child: const Text('Nouvelle tâche'),
             ),
           ),
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context, 5),
+              onPressed: () => Navigator.pop(context, null),
               child: const Text('Nouvelle note'),
             ),
           ),
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context, 6),
+              onPressed: () => Navigator.pop(context, null),
               child: const Text('Nouvelle check-list'),
             ),
           ),
