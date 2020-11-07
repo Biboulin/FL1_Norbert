@@ -12,7 +12,10 @@ const Color greyUnselectedIcon = Color(0xFFA09FA4);
 const Color whiteSelectedIcon = Color(0xFFFEFFFF);
 const Color redFloatingButton = Color(0xFFFC817C);
 
-// Text Colors
+/// Text Colors
 const Color blackMaintitles = Color(0xFF6696BB);
 const Color greySubtitles = Color(0xFF9dadbc);
 const Color greyDateCards = Color(0xff767676);
+
+/// Date Button
+const Color brownButton = Color(0xFFBB8136);
