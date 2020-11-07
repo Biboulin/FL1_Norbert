@@ -1,5 +1,4 @@
 import 'package:FL1_Norbert/models/data.dart';
-import 'package:FL1_Norbert/models/task/task.dart';
 import 'package:FL1_Norbert/models/task/task_helpers.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:flutter/material.dart';

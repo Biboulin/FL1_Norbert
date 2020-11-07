@@ -1,6 +1,7 @@
 import 'package:FL1_Norbert/__mock__/tasks_mock.dart';
 import 'package:FL1_Norbert/models/task/task_enum.dart';
 import 'package:FL1_Norbert/models/task/task_helpers.dart';
+import 'package:FL1_Norbert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'task/task.dart';
 
@@ -12,12 +13,19 @@ class Data with ChangeNotifier {
   }
 
   final List<Task> _tasks = <Task>[];
+  //final List<ListItem> _items = <ListItem>[];
   final List<Task> _displayTasks = <Task>[];
+  User _currentUser = User(quickNoteIds: <String>[]);
   FilterTask _filterTaskState;
 
+  User get currentUser => _currentUser;
   List<Task> get tasks => _tasks;
   List<Task> get displayTasks => _displayTasks;
   FilterTask get filterTastState => _filterTaskState;
+
+  void setUsr(User usr) => _currentUser = usr;
+
+  void addNotes(String noteId) => _currentUser.quickNoteIds.add(noteId);
 
   void delTasks(List<Task> tasksToDel) {
     for (final Task task in tasksToDel) {

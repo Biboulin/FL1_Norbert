@@ -2,6 +2,8 @@ import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/home/create_element_popup.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
+import 'package:FL1_Norbert/views/quick_notes/notelist_app_bar.dart';
+import 'package:FL1_Norbert/views/quick_notes/quick_note_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,7 +22,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _views = <Widget>[
     TasksView(),
     const Center(child: Text('menu')),
-    const Center(child: Text('notes')),
+    QuickNoteList(),
     const Center(child: Text('profil')),
     const Center(child: Text('new task')),
     const Center(child: Text('new note')),
@@ -30,6 +32,7 @@ class _HomeState extends State<Home> {
   final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
     TaskAppBar(),
     null,
+    NotelistAppBar(),
     null,
     null,
     null,
@@ -73,10 +76,18 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog<int>(
+          showDialog<Widget>(
             context: context,
             child: CreateElementPopup(),
-          ).then((int index) => setState(() => _selectedIndex = index));
+          ).then(
+            (Widget page) {
+              Navigator.push<Widget>(
+                context,
+                MaterialPageRoute<Widget>(
+                    builder: (BuildContext context) => page),
+              );
+            },
+          );
         },
         child: const Icon(Icons.add),
         backgroundColor: blue,
