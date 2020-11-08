@@ -23,15 +23,14 @@ class User {
     image = json['image'] as String;
     if (json['_tasks'] != null) {
       taskIds = <String>[];
-      json['_tasks'].forEach((String v) {
-        taskIds.add(v);
+      json['_tasks'].forEach((dynamic v) {
+        taskIds.add(v as String);
       });
     }
     if (json['_quickNotes'] != null) {
       print(json['_quickNotes']);
       taskIds = <String>[];
       json['_quickNotes'].forEach((dynamic v) {
-        print(v);
         quickNoteIds.add(v as String);
       });
     }
@@ -66,13 +65,13 @@ class User {
     data['firebaseId'] = firebaseId;
     data['image'] = image;
     if (taskIds != null) {
-      data['_tasks'] = taskIds.map((String v) => v).toList();
+      data['_tasks'] = taskIds.map((dynamic v) => v as String).toList();
     }
     if (quickNoteIds != null) {
       data['_quickNotes'] = quickNoteIds.map((String v) => v).toList();
     }
     if (projectIds != null) {
-      data['_projects'] = projectIds.map((String v) => v).toList();
+      data['_projects'] = projectIds.map((dynamic v) => v as String).toList();
     }
     return data;
   }

@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:FL1_Norbert/models/task/task.dart';
 import 'package:FL1_Norbert/services/task.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/new_element/select_date_dialog.dart';
 import 'package:FL1_Norbert/views/new_element/select_image_dialog.dart';
 import 'package:FL1_Norbert/views/new_element/select_members_dialog.dart';
+import 'package:FL1_Norbert/views/widgets/assignee_tooltip.dart';
 import 'package:FL1_Norbert/views/widgets/project_tooltip.dart';
 import 'package:FL1_Norbert/views/widgets/user_tooltip.dart';
 import 'package:flutter/rendering.dart';
@@ -20,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CreateTask extends StatefulWidget {
   @override
@@ -155,7 +155,7 @@ class _CreateTaskState extends State<CreateTask> {
                                 hintText: 'Propriétaire',
                               ),
                             )
-                          : UserToolTip(_assignee),
+                          : AssigneeToolTip(_assignee),
                     ),
                   ),
                 ),
@@ -429,21 +429,49 @@ class _CreateTaskState extends State<CreateTask> {
                       ),
                       color: blue,
                       onPressed: () async {
-                        final Uint8List bytes = _image.readAsBytesSync();
-                        final String _image64 = base64Encode(bytes);
                         final List<String> _membersIds = <String>[];
                         for (final User user in _membersAssignedToTask)
                           _membersIds.add(user.id);
                         final Task tmp = Task(
                           title: _titleController.text,
                           userId: _assignee.id,
-                          attachedProjectId: _project.id,
+                          attachedProjectId: '',
                           description: _descriptionController.text,
-                          image: _image64,
                           dueDate: _selectedDate,
                           attachedUserIds: _membersIds,
+                          commentIds: <String>[],
+                          isDone: false,
+                          color: 'red',
                         );
-                        createTask(tmp);
+                        uploadImageToFirebase(context, _image)
+                            .then((String link) {
+                          tmp.image = link;
+                          createTask(tmp).then((_) async {
+                            final QuerySnapshot _getAllTasksByAssignee =
+                                await getAllTasksByAssignee(
+                                    collectionReferenceTasks(),
+                                    context.read<Data>().currentUser);
+                            final List<Task> tasks = <Task>[];
+                            for (final QueryDocumentSnapshot element
+                                in _getAllTasksByAssignee.docs) {
+                              final Task task = Task.fromJson(element.data());
+                              task.id = element.id;
+                              tasks.add(task);
+                            }
+                            final QuerySnapshot _getAllTasksByMember =
+                                await getAllTasksByMember(
+                                    collectionReferenceTasks(),
+                                    context.read<Data>().currentUser);
+                            for (final QueryDocumentSnapshot element
+                                in _getAllTasksByMember.docs) {
+                              final Task task = Task.fromJson(element.data());
+                              task.id = element.id;
+                              tasks.add(task);
+                            }
+                            context.read<Data>().addTasks(tasks);
+                            Navigator.pop(context);
+                          });
+                        });
                       },
                     ),
                   ),
