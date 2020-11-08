@@ -1,15 +1,11 @@
 import 'package:FL1_Norbert/models/data.dart';
 import 'package:FL1_Norbert/models/project.dart';
 import 'package:FL1_Norbert/services/project.dart';
-import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'dart:typed_data';
-import 'dart:convert';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -69,7 +65,7 @@ class _ProfileViewState extends State<ProfileView> {
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                             context.watch<Data>().currentUser.firstName +
                                 ' ' +
@@ -87,10 +83,10 @@ class _ProfileViewState extends State<ProfileView> {
                 padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+                  children: <Widget>[
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                             context
                                 .watch<Data>()
@@ -104,7 +100,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(countCompletedTasks(context).toString(),
                             style: const TextStyle(fontSize: 20)),
                         const Text('Tâches Complétées',
@@ -127,7 +123,7 @@ class _ProfileViewState extends State<ProfileView> {
             } else if (snapshot.connectionState == ConnectionState.done) {
               context.watch<Data>().addProjects(snapshot.data[0]);
               context.watch<Data>().addUserProjects(getUserProjects(context));
-              return Column(children: [
+              return Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Container(
@@ -192,7 +188,7 @@ class _ProfileViewState extends State<ProfileView> {
                     borderRadius: BorderRadius.circular(5),
                     child: context.watch<Data>().userProjects.isNotEmpty
                         ? Column(
-                            children: [
+                            children: <Widget>[
                               const Text(
                                 'Statistiques',
                                 style: TextStyle(fontSize: 20),
@@ -297,75 +293,6 @@ class _ProfileViewState extends State<ProfileView> {
             }
             return const Text('loading');
           }),
-      /*Padding(
-          padding: const EdgeInsets.all(20),
-          child: Material(
-              elevation: 2,
-              borderRadius: BorderRadius.circular(5),
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Statistiques',
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.left,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                CircularPercentIndicator(
-                                  radius: 100.0,
-                                  lineWidth: 3.0,
-                                  percent: 0.5,
-                                  center: const Text('50%',
-                                      style: TextStyle(fontSize: 20)),
-                                  progressColor: grey,
-                                ),
-                                const Text('Events',
-                                    style: TextStyle(fontSize: 20))
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CircularPercentIndicator(
-                                  radius: 100.0,
-                                  lineWidth: 3.0,
-                                  percent: 0.5,
-                                  center: const Text('50%',
-                                      style: TextStyle(fontSize: 20)),
-                                  progressColor: red,
-                                ),
-                                const Text('To do',
-                                    style: TextStyle(fontSize: 20))
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                CircularPercentIndicator(
-                                  radius: 100.0,
-                                  lineWidth: 3.0,
-                                  percent: 0.5,
-                                  center: const Text('50%',
-                                      style: TextStyle(fontSize: 20)),
-                                  progressColor: blue,
-                                ),
-                                const Text('Project',
-                                    style: TextStyle(fontSize: 20))
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )))*/
     ]);
   }
 }

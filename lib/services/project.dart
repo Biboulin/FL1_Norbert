@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 Future<List<Project>> getAllProjects(BuildContext context) async {
-  final List<Project> allProjects = [];
+  final List<Project> allProjects = <Project>[];
 
   final CollectionReference projects =
       FirebaseFirestore.instance.collection('projects');
@@ -20,7 +20,7 @@ Future<List<Project>> getAllProjects(BuildContext context) async {
 }
 
 List<Project> getUserProjects(BuildContext context) {
-  final List<Project> userProjects = [];
+  final List<Project> userProjects = <Project>[];
 
   if (context.watch<Data>().currentUser.projectIds != null) {
     for (final String userProjectId

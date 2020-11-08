@@ -27,9 +27,9 @@ class _ProjectCreationState extends State<ProjectCreation> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: <Widget>[
                   Column(
-                    children: [
+                    children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text('Titre',
@@ -42,7 +42,7 @@ class _ProjectCreationState extends State<ProjectCreation> {
                     ],
                   ),
                   Column(
-                    children: [
+                    children: <Widget>[
                       const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text('Couleur',
@@ -51,7 +51,7 @@ class _ProjectCreationState extends State<ProjectCreation> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                        children: <Widget>[
                           SizedBox(
                               height: 50,
                               width: 50,
