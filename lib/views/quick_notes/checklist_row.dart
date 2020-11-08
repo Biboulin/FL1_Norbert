@@ -1,13 +1,17 @@
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 
-class NotesRow extends StatelessWidget {
-  const NotesRow({this.noteColor, this.description, this.type});
+class CheckListRow extends StatelessWidget {
+  const CheckListRow(
+      {this.noteColor, this.description, this.type, this.title, this.items});
   //const NotesRow({Key key}) : super(key: key);
   final String noteColor;
+  final String title;
   final String description;
   final String type;
+  final List<Item> items;
 
   Color pickColor(String color) {
     switch (color) {
@@ -48,9 +52,31 @@ class NotesRow extends StatelessWidget {
                 top: 15.0,
                 // top: 15.0,
               ),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(description),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        description,
+                        style: const TextStyle(fontFamily: 'Montserrat'),
+                      ),
+                    ],
+                  ),
+                  // ListView.builder(
+                  //   itemCount: items.length,
+                  //   itemBuilder: (BuildContext context, int index) {},
+                  // )
                 ],
               ),
             ),
