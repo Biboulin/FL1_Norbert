@@ -1,0 +1,12 @@
+{
+    "id": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "access_token": "",
+    "firebaseId": "",
+    "image": "base64",
+    "_tasks": [],
+    "_projects": []
+}

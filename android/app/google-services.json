@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "338003806343",
+    "firebase_url": "https://tout-doux-liste-11148.firebaseio.com",
+    "project_id": "tout-doux-liste-11148",
+    "storage_bucket": "tout-doux-liste-11148.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338003806343:android:0160e65f18a2496a949022",
+        "android_client_info": {
+          "package_name": "com.example.FL1_Norbert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338003806343-17q20qekjbfeps690vsiiki05pm5skgj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcyyqjQHWuhOE48qE2_Phn9CBldBfTZEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338003806343-17q20qekjbfeps690vsiiki05pm5skgj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
