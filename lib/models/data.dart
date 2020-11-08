@@ -56,13 +56,22 @@ class Data with ChangeNotifier {
   }
 
   void addProjects(List<Project> projectsToAdd) {
-    _projects.addAll(projectsToAdd);
+    _projects
+      ..clear()
+      ..addAll(projectsToAdd);
     //notifyListeners();
   }
 
   void addUserProjects(List<Project> projectsToAdd) {
-    _userProjects.addAll(projectsToAdd);
+    _userProjects
+      ..clear()
+      ..addAll(projectsToAdd);
     //notifyListeners();
+  }
+
+  void addUserProject(Project project) {
+    _userProjects.add(project);
+    notifyListeners();
   }
 
   void filterTasks(FilterTask filter) {

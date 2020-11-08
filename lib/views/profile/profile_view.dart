@@ -2,6 +2,7 @@ import 'package:FL1_Norbert/models/data.dart';
 import 'package:FL1_Norbert/models/project.dart';
 import 'package:FL1_Norbert/services/project.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
+import 'package:FL1_Norbert/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,28 +17,12 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final List<String> projectName = <String>[
-    'Events',
-    'To do Tasks',
-    'Project',
-    'autre projet'
-  ];
-  final List<Color> colorCodes = [blue, red, darkBlue, red];
-  final List<String> description = <String>[
-    '10 Tasks',
-    '2 Tasks',
-    '20 Tasks',
-    '1 Task'
-  ];
-
   Future<List<Project>> _getAllProjects;
-  Future<List<Project>> _getUserProjects;
 
   @override
   void initState() {
     super.initState();
     _getAllProjects = getAllProjects(context);
-    _getUserProjects = getUserProjects(context);
   }
 
   @override
@@ -98,156 +83,217 @@ class _ProfileViewState extends State<ProfileView> {
                   )
                 ],
               ),
-              FutureBuilder<List<Project>>(
-                  future: getAllProjects(context),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Project>> snapshot) {
-                    if (snapshot.hasError) {
-                      return const Text("Something went wrong");
-                    }
-
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('120',
-                                    style: TextStyle(fontSize: 20)),
-                                const Text('Tâches Créées',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 17)),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('80',
-                                    style: TextStyle(fontSize: 20)),
-                                const Text('Tâches Complétées',
-                                    style: TextStyle(
-                                        color: Colors.grey, fontSize: 17)),
-                              ],
-                            )
-                          ],
-                        ),
-                      );
-                      //Text("Full Name: ${data['full_name']} ${data['last_name']}");
-                    }
-
-                    return const Text('loading');
-                  })
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            context
+                                .watch<Data>()
+                                .displayTasks
+                                .length
+                                .toString(),
+                            style: const TextStyle(fontSize: 20)),
+                        const Text('Tâches Créées',
+                            style: TextStyle(color: Colors.grey, fontSize: 17)),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(countCompletedTasks(context).toString(),
+                            style: const TextStyle(fontSize: 20)),
+                        const Text('Tâches Complétées',
+                            style: TextStyle(color: Colors.grey, fontSize: 17)),
+                      ],
+                    )
+                  ],
+                ),
+              )
             ],
           )),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.17,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(8),
-              itemCount: projectName.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: colorCodes[index],
-                    ),
-                    child: Padding(
-                        padding: const EdgeInsets.all(40.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              projectName[index],
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
-                            ),
-                            Text(
-                              description[index],
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 17),
-                            ),
-                          ],
-                        )),
-                  ),
-                );
-              }),
-        ),
-      ),
       FutureBuilder<List<List<Project>>>(
-          future: Future.wait(
-              <Future<List<Project>>>[_getAllProjects, _getUserProjects]),
+          future: Future.wait(<Future<List<Project>>>[_getAllProjects]),
           builder: (BuildContext context,
               AsyncSnapshot<List<List<Project>>> snapshot) {
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
-            }
-
-            if (snapshot.connectionState == ConnectionState.done) {
+            } else if (snapshot.connectionState == ConnectionState.done) {
               context.watch<Data>().addProjects(snapshot.data[0]);
-              context.watch<Data>().addUserProjects(snapshot.data[1]);
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Material(
-                  elevation: 2,
-                  borderRadius: BorderRadius.circular(5),
-                  child: context.watch<Data>().userProjects.isNotEmpty
-                      ? Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.all(8),
-                              itemCount:
-                                  context.watch<Data>().userProjects.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 20.0),
-                                  child: Column(
-                                    children: [
-                                      CircularPercentIndicator(
-                                        radius: 100.0,
-                                        lineWidth: 3.0,
-                                        percent: 0.5,
-                                        center: const Text('50%',
-                                            style: TextStyle(fontSize: 20)),
-                                        progressColor: grey,
-                                      ),
-                                      Text(
-                                          context
-                                              .watch<Data>()
-                                              .userProjects[index]
-                                              .name,
-                                          style: const TextStyle(fontSize: 20))
-                                    ],
+              context.watch<Data>().addUserProjects(getUserProjects(context));
+              return Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    width: MediaQuery.of(context).size.width,
+                    child: context.watch<Data>().userProjects.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.all(8),
+                            itemCount:
+                                context.watch<Data>().userProjects.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: getColor(context
+                                        .watch<Data>()
+                                        .userProjects[index]
+                                        .color),
                                   ),
-                                );
-                              }),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width,
-                            child: const Padding(
-                              padding: EdgeInsets.all(20.0),
-                              child: Text(
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(40.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            context
+                                                .watch<Data>()
+                                                .userProjects[index]
+                                                .name,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            countTasksInProject(
+                                                        context,
+                                                        context
+                                                            .watch<Data>()
+                                                            .userProjects[index]
+                                                            .id)
+                                                    .toString() +
+                                                ' tâches',
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 17),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              );
+                            })
+                        : Container(),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(5),
+                    child: context.watch<Data>().userProjects.isNotEmpty
+                        ? Column(
+                            children: [
+                              const Text(
                                 'Statistiques',
                                 style: TextStyle(fontSize: 20),
                                 textAlign: TextAlign.left,
                               ),
-                            ),
-                          )),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.25,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    padding: const EdgeInsets.all(8),
+                                    itemCount: context
+                                        .watch<Data>()
+                                        .userProjects
+                                        .length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 20.0),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: CircularPercentIndicator(
+                                                radius: 100.0,
+                                                lineWidth: 3.0,
+                                                percent: countPercentageDoneTasks(
+                                                        context,
+                                                        countTasksInProject(
+                                                            context,
+                                                            context
+                                                                .watch<Data>()
+                                                                .userProjects[
+                                                                    index]
+                                                                .id),
+                                                        context
+                                                            .watch<Data>()
+                                                            .userProjects[index]
+                                                            .id) /
+                                                    100,
+                                                center: Text(
+                                                    countPercentageDoneTasks(
+                                                                context,
+                                                                countTasksInProject(
+                                                                    context,
+                                                                    context
+                                                                        .watch<
+                                                                            Data>()
+                                                                        .userProjects[
+                                                                            index]
+                                                                        .id),
+                                                                context
+                                                                    .watch<
+                                                                        Data>()
+                                                                    .userProjects[
+                                                                        index]
+                                                                    .id)
+                                                            .toString() +
+                                                        '%',
+                                                    style: const TextStyle(
+                                                        fontSize: 20)),
+                                                progressColor: getColor(context
+                                                    .watch<Data>()
+                                                    .userProjects[index]
+                                                    .color),
+                                              ),
+                                            ),
+                                            Text(
+                                                context
+                                                    .watch<Data>()
+                                                    .userProjects[index]
+                                                    .name,
+                                                style: const TextStyle(
+                                                    fontSize: 20))
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ],
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width,
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Text(
+                                  'Statistiques',
+                                  style: TextStyle(fontSize: 20),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )),
+                  ),
                 ),
-              );
+              ]);
             }
             return const Text('loading');
           }),

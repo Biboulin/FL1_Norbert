@@ -2,6 +2,8 @@ import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/profile/profile_app_bar.dart';
 import 'package:FL1_Norbert/views/profile/profile_view.dart';
 import 'package:FL1_Norbert/views/new_element/create_element_popup.dart';
+import 'package:FL1_Norbert/views/projects/project_app_bar.dart';
+import 'package:FL1_Norbert/views/projects/project_view.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:FL1_Norbert/views/quick_notes/notelist_app_bar.dart';
@@ -23,7 +25,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _views = <Widget>[
     TasksView(),
-    const Center(child: Text('menu')),
+    ProjectView(),
     const Center(child: Text('notes')),
     ProfileView(),
     const Center(child: Text('new task')),
@@ -33,7 +35,7 @@ class _HomeState extends State<Home> {
 
   final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
     TaskAppBar(),
-    null,
+    ProjectAppBar(),
     NotelistAppBar(),
     null,
     ProfileAppBar(),

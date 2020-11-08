@@ -2,12 +2,12 @@ import 'package:FL1_Norbert/models/task/task.dart';
 
 List<Task> tasksMock = <Task>[
   Task(
-    id: '001',
-    title: 'Task title',
-    dueDate: DateTime(2021, 11, 02),
-    color: 'red',
-    isDone: false,
-  ),
+      id: '001',
+      title: 'Task title',
+      dueDate: DateTime(2021, 11, 02),
+      color: 'red',
+      isDone: false,
+      attachedProjectId: '2NQiW4c4Y1rdnc7SvGxC'),
   Task(
     id: '002',
     title: 'Task title',
@@ -44,12 +44,12 @@ List<Task> tasksMock = <Task>[
     isDone: false,
   ),
   Task(
-    id: '007',
-    title: 'Task title',
-    dueDate: DateTime(2021, 6, 13),
-    color: 'green',
-    isDone: true,
-  ),
+      id: '007',
+      title: 'Task title',
+      dueDate: DateTime(2021, 6, 13),
+      color: 'green',
+      isDone: true,
+      attachedProjectId: '2NQiW4c4Y1rdnc7SvGxC'),
   Task(
     id: '008',
     title: 'Task title',
