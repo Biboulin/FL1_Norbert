@@ -1,4 +1,3 @@
-import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAppBar extends StatelessWidget with PreferredSizeWidget {
