@@ -2,6 +2,8 @@ import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/new_element/create_element_popup.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
+import 'package:FL1_Norbert/views/quick_notes/notelist_app_bar.dart';
+import 'package:FL1_Norbert/views/quick_notes/quick_note_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,13 +22,14 @@ class _HomeState extends State<Home> {
   final List<Widget> _views = <Widget>[
     TasksView(),
     const Center(child: Text('menu')),
-    const Center(child: Text('notes')),
+    QuickNoteList(),
     const Center(child: Text('profil')),
   ];
 
   final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
     TaskAppBar(),
     null,
+    NotelistAppBar(),
     null,
     null,
   ];

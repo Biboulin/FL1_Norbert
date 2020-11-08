@@ -5,6 +5,10 @@ import 'package:FL1_Norbert/models/user.dart' as user;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:FL1_Norbert/views/home/home.dart';
+import 'package:FL1_Norbert/models/data.dart';
+import 'package:provider/provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class Register extends StatefulWidget {
   const Register();
@@ -42,329 +46,331 @@ class _RegisterState extends State<Register> {
       resizeToAvoidBottomPadding: false,
       body: Builder(
         builder: (BuildContext context) {
-          return Column(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 80,
-                ),
-                width: 330,
-                child: const Text(
-                  'Bonjour !',
-                  style: TextStyle(
-                    fontFamily: 'Pacifico',
-                    fontSize: 52,
-                    color: darkBlue,
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 80,
+                  ),
+                  width: 330,
+                  child: const Text(
+                    'Bonjour !',
+                    style: TextStyle(
+                      fontFamily: 'Pacifico',
+                      fontSize: 52,
+                      color: darkBlue,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                child: const Text(
-                  'Créer un compte pour continuer.',
-                  style: TextStyle(
-                    fontFamily: 'Pacifico',
-                    fontSize: 24,
-                    color: greySubtitles,
+                Container(
+                  child: const Text(
+                    'Créer un compte pour continuer.',
+                    style: TextStyle(
+                      fontFamily: 'Pacifico',
+                      fontSize: 24,
+                      color: greySubtitles,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                padding: const EdgeInsets.all(30),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Card(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: TextFormField(
-                          controller: firstnameController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                              left: 15,
-                              bottom: 11,
-                              top: 11,
-                              right: 15,
-                            ),
-                            hintText: 'Prénom',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: greySubtitles,
-                            ),
-                            errorStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              color: red,
-                            ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.all(30),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Card(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text('Please enter some text'),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
+                          child: TextFormField(
+                            controller: firstnameController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 15,
+                                bottom: 11,
+                                top: 11,
+                                right: 15,
+                              ),
+                              hintText: 'Prénom',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: greySubtitles,
+                              ),
+                              errorStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                color: red,
+                              ),
+                            ),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          const Text('Please enter some text'),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
                               }
                               return null;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Card(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: TextFormField(
-                          controller: lastnameController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                              left: 15,
-                              bottom: 11,
-                              top: 11,
-                              right: 15,
-                            ),
-                            hintText: 'Nom',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: greySubtitles,
-                            ),
-                            errorStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              color: red,
-                            ),
+                            },
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text('Please enter some text'),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
-                              }
-                              return null;
-                            }
-                            return null;
-                          },
                         ),
-                      ),
-                      Card(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: TextFormField(
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                              left: 15,
-                              bottom: 11,
-                              top: 11,
-                              right: 15,
-                            ),
-                            hintText: 'Entrer votre email',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: greySubtitles,
-                            ),
-                            errorStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              color: red,
-                            ),
+                        Card(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text('Please enter some text'),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
+                          child: TextFormField(
+                            controller: lastnameController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 15,
+                                bottom: 11,
+                                top: 11,
+                                right: 15,
+                              ),
+                              hintText: 'Nom',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: greySubtitles,
+                              ),
+                              errorStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                color: red,
+                              ),
+                            ),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          const Text('Please enter some text'),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
                               }
                               return null;
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Card(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: TextFormField(
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                              left: 15,
-                              bottom: 11,
-                              top: 11,
-                              right: 15,
-                            ),
-                            hintText: 'Entrer votre mot de passe',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: greySubtitles,
-                            ),
-                            errorStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              color: red,
-                            ),
+                            },
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text('Please enter some text'),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
-                              }
-                              return null;
-                            } else if (value.length < 8) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text("Passwords doesn't match !"),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
-                              }
-                              return null;
-                            }
-                            return null;
-                          },
                         ),
-                      ),
-                      Card(
-                        margin: const EdgeInsets.only(bottom: 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: TextFormField(
-                          controller: confirmPwdController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                              left: 15,
-                              bottom: 11,
-                              top: 11,
-                              right: 15,
-                            ),
-                            hintText: 'Confirmer votre mot de passe',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                              color: greySubtitles,
-                            ),
-                            errorStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              color: red,
-                            ),
+                        Card(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text('Please enter some text'),
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
+                          child: TextFormField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 15,
+                                bottom: 11,
+                                top: 11,
+                                right: 15,
+                              ),
+                              hintText: 'Entrer votre email',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: greySubtitles,
+                              ),
+                              errorStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                color: red,
+                              ),
+                            ),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          const Text('Please enter some text'),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
                               }
                               return null;
-                              // return 'Please enter some text';
-                            } else if (value != passwordController.text) {
-                              if (_validForm) {
-                                _validForm = false;
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        const Text("Passwords doesn't match !"),
-                                    elevation: 350,
-                                    backgroundColor: red,
-                                    onVisible: () {
-                                      _validForm = true;
-                                    },
-                                  ),
-                                );
-                              }
-                              return null;
-                            }
-                            return null;
-                          },
+                            },
+                          ),
                         ),
-                      ),
-                      ButtonTheme(
+                        Card(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: TextFormField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 15,
+                                bottom: 11,
+                                top: 11,
+                                right: 15,
+                              ),
+                              hintText: 'Entrer votre mot de passe',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: greySubtitles,
+                              ),
+                              errorStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                color: red,
+                              ),
+                            ),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          const Text('Please enter some text'),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
+                              } else if (value.length < 8) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                          "Passwords doesn't match !"),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Card(
+                          margin: const EdgeInsets.only(bottom: 40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: TextFormField(
+                            controller: confirmPwdController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 15,
+                                bottom: 11,
+                                top: 11,
+                                right: 15,
+                              ),
+                              hintText: 'Confirmer votre mot de passe',
+                              hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: greySubtitles,
+                              ),
+                              errorStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                color: red,
+                              ),
+                            ),
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          const Text('Please enter some text'),
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
+                                // return 'Please enter some text';
+                              } else if (value != passwordController.text) {
+                                if (_validForm) {
+                                  _validForm = false;
+                                  Scaffold.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: const Text(
+                                          "Passwords doesn't match !"),
+                                      elevation: 350,
+                                      backgroundColor: red,
+                                      onVisible: () {
+                                        _validForm = true;
+                                      },
+                                    ),
+                                  );
+                                }
+                                return null;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        ButtonTheme(
                           minWidth: double.infinity,
                           height: 55,
                           shape: RoundedRectangleBorder(
@@ -375,41 +381,57 @@ class _RegisterState extends State<Register> {
                               if (_formKey.currentState.validate() &&
                                   _validForm) {
                                 try {
-                                  final UserCredential tmp =
-                                      await auth.createUserWithEmailAndPassword(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  );
-                                  print(tmp);
-                                  final Map<String, dynamic> usrData =
-                                      <String, dynamic>{
-                                    'firstName': firstnameController.text,
-                                    'lastName': lastnameController.text,
-                                    'email': emailController.text,
-                                    'firebaseId': tmp.user.uid,
-                                    'accessToken': tmp.user.refreshToken,
-                                  };
-
                                   final CollectionReference users =
                                       FirebaseFirestore.instance
                                           .collection('users');
 
-                                  users.add(usrData).then(
-                                        (DocumentReference value) =>
-                                            print(value.id),
-                                      );
+                                  final QuerySnapshot exists = await users
+                                      .where(
+                                        'email',
+                                        isEqualTo: emailController.text,
+                                      )
+                                      .get();
 
-                                  // Save current user to provider
-                                  final user.User currentUser =
-                                      user.User.fromJson(usrData);
+                                  if (exists.docs.isEmpty) {
+                                    final UserCredential tmp = await auth
+                                        .createUserWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                    final Map<String, dynamic> usrData =
+                                        <String, dynamic>{
+                                      'firstName': firstnameController.text,
+                                      'lastName': lastnameController.text,
+                                      'email': emailController.text,
+                                      'firebaseId': tmp.user.uid,
+                                      '_quickNotes': null
+                                    };
+                                    final DocumentReference res =
+                                        await users.add(usrData);
 
-                                  Navigator.push<Widget>(
-                                    context,
-                                    MaterialPageRoute<Widget>(
-                                      builder: (BuildContext context) =>
-                                          const Home(),
-                                    ),
-                                  );
+                                    // Retrieve user document id from firebase and set to usrData
+                                    usrData.putIfAbsent('id', () => res.id);
+
+                                    // Save current user to provider
+                                    final user.User currentUser =
+                                        user.User.fromJson(usrData);
+
+                                    context.read<Data>().setUsr(currentUser);
+                                    Navigator.push<Widget>(
+                                      context,
+                                      MaterialPageRoute<Widget>(
+                                        builder: (BuildContext context) =>
+                                            const Home(),
+                                      ),
+                                    );
+                                  } else {
+                                    Scaffold.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('User already exists !'),
+                                        backgroundColor: red,
+                                      ),
+                                    );
+                                  }
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'weak-password') {
                                     errorMsg =
@@ -437,12 +459,87 @@ class _RegisterState extends State<Register> {
                                 color: white,
                               ),
                             ),
-                          ))
-                    ],
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: GoogleSignInButton(
+                            onPressed: () async {
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              final GoogleSignIn googleSignIn = GoogleSignIn();
+                              final GoogleSignInAccount googleSignInAccount =
+                                  await googleSignIn.signIn();
+                              final GoogleSignInAuthentication
+                                  googleSignInAuthentication =
+                                  await googleSignInAccount.authentication;
+                              final AuthCredential credential =
+                                  GoogleAuthProvider.credential(
+                                accessToken:
+                                    googleSignInAuthentication.accessToken,
+                                idToken: googleSignInAuthentication.idToken,
+                              );
+                              final UserCredential authResult =
+                                  await auth.signInWithCredential(credential);
+
+                              if (authResult.user.email != null) {
+                                final Map<String, dynamic> usrData =
+                                    <String, dynamic>{
+                                  'firstName': authResult.user.displayName,
+                                  'email': authResult.user.email,
+                                  'firebaseId': authResult.user.uid,
+                                  '_quickNotes': null
+                                };
+
+                                final CollectionReference users =
+                                    FirebaseFirestore.instance
+                                        .collection('users');
+
+                                final QuerySnapshot exists = await users
+                                    .where('email',
+                                        isEqualTo: authResult.user.email)
+                                    .get();
+
+                                if (exists.docs.isEmpty) {
+                                  final DocumentReference res =
+                                      await users.add(usrData);
+
+                                  usrData.putIfAbsent(
+                                    'id',
+                                    () => res.id,
+                                  );
+                                } else {
+                                  usrData.putIfAbsent(
+                                    'id',
+                                    () => exists.docs[0].id,
+                                  );
+                                }
+
+                                // Save current user to provider
+                                final user.User currentUser =
+                                    user.User.fromJson(usrData);
+
+                                context.read<Data>().setUsr(currentUser);
+                                Navigator.push<Widget>(
+                                  context,
+                                  MaterialPageRoute<Widget>(
+                                    builder: (BuildContext context) =>
+                                        const Home(),
+                                  ),
+                                );
+                              }
+                            },
+                            text: "S'identifier avec Google",
+                            borderRadius: 15.0,
+                            textStyle:
+                                const TextStyle(fontFamily: 'Montserrat'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         },
       ),
