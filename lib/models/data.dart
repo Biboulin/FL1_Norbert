@@ -36,7 +36,10 @@ class Data with ChangeNotifier {
 
   void setUsr(User usr) => _currentUser = usr;
 
-  void addNotes(String noteId) => _currentUser.quickNoteIds.add(noteId);
+  void addNotes(String noteId) {
+    _currentUser.quickNoteIds.add(noteId);
+    notifyListeners();
+  }
 
   void delTasks(List<Task> tasksToDel) {
     for (final Task task in tasksToDel) {

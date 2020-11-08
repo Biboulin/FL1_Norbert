@@ -487,7 +487,7 @@ class _RegisterState extends State<Register> {
                                   'firstName': authResult.user.displayName,
                                   'email': authResult.user.email,
                                   'firebaseId': authResult.user.uid,
-                                  '_quickNotes': null
+                                  //'_quickNotes': null,
                                 };
 
                                 final CollectionReference users =
@@ -508,24 +508,42 @@ class _RegisterState extends State<Register> {
                                     () => res.id,
                                   );
                                 } else {
+                                  Map<String, dynamic> data =
+                                      exists.docs[0].data();
+
+                                  final dynamic notes = data['_quickNotes'];
+                                  final dynamic projects = data['_projects'];
+                                  print(notes);
                                   usrData.putIfAbsent(
                                     'id',
                                     () => exists.docs[0].id,
                                   );
+                                  // usrData.putIfAbsent(
+                                  //   '_quickNotes',
+                                  //   () => notes,
+                                  // );
+                                  //usrData.update('key', (value) => null)
+                                  usrData['_quickNotes'] = notes;
+                                  usrData['_projects'] = projects;
+                                  print(usrData);
+                                  final user.User currentUser =
+                                      user.User.fromJson(usrData);
+                                  context.read<Data>().setUsr(currentUser);
+                                  Navigator.push<Widget>(
+                                    context,
+                                    MaterialPageRoute<Widget>(
+                                      builder: (BuildContext context) =>
+                                          const Home(),
+                                    ),
+                                  );
+                                  // try {
+                                  // } on Exception catch (e) {
+                                  //   print(e);
+                                  // }
                                 }
 
                                 // Save current user to provider
-                                final user.User currentUser =
-                                    user.User.fromJson(usrData);
 
-                                context.read<Data>().setUsr(currentUser);
-                                Navigator.push<Widget>(
-                                  context,
-                                  MaterialPageRoute<Widget>(
-                                    builder: (BuildContext context) =>
-                                        const Home(),
-                                  ),
-                                );
                               }
                             },
                             text: "S'identifier avec Google",
