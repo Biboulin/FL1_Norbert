@@ -1,16 +1,19 @@
-# FL1_Norbert
+# Tout doux liste
 
-A new Flutter project.
+Flutter project for Epitech module
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
+Ce projet est une application crossplateform, permettant de créer, planifier et gérer des taches
 
-A few resources to get you started if this is your first Flutter project:
+Vous pouvez trouver la dernière version de l'APK Android sur ce lien : https://codemagic.io/app/5fa7ddb197db29131177e49a/build/5fa8025d29657a00129740ac
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Afin de lancer le projet vous pouvez: 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Sur Android
+
+- Soit récupérer le fichier app-debug.apk sur codemagic et l'installer sur votre smartphone
+- Soit pull ce repository et build l'application avec Android Studio.
+
+### Sur iOS
+Comme nous n'avons pas de compte developpeur Apple, afin d'installer l'application sur un iPhone vous devez obligatoirement pull le repository et compiler + installer l'application avec XCode sur un appareil Apple (macbook)
