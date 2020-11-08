@@ -15,7 +15,7 @@ const Color greyUnselectedIcon = Color(0xFFA09FA4);
 const Color whiteSelectedIcon = Color(0xFFFEFFFF);
 const Color redFloatingButton = Color(0xFFFC817C);
 
-// Text Colors
+/// Text Colors
 const Color blackMaintitles = Color(0xFF6696BB);
 const Color greySubtitles = Color(0xFF9dadbc);
 const Color greyDateCards = Color(0xff767676);
@@ -28,3 +28,6 @@ const Color paleBlack = Color(0xFF394856);
 const Color brown = Color(0xFFB38344);
 const Color offWhite = Color(0xFFF4F4F4);
 const Color borderCheckbox = Color(0xFF979797);
+
+/// Date Button
+const Color brownButton = Color(0xFFBB8136);

@@ -1,5 +1,5 @@
 import 'package:FL1_Norbert/utils/colors.dart';
-import 'package:FL1_Norbert/views/home/create_element_popup.dart';
+import 'package:FL1_Norbert/views/new_element/create_element_popup.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:FL1_Norbert/views/quick_notes/notelist_app_bar.dart';
@@ -24,9 +24,6 @@ class _HomeState extends State<Home> {
     const Center(child: Text('menu')),
     QuickNoteList(),
     const Center(child: Text('profil')),
-    const Center(child: Text('new task')),
-    const Center(child: Text('new note')),
-    const Center(child: Text('new checkList')),
   ];
 
   final List<PreferredSizeWidget> _appBars = <PreferredSizeWidget>[
@@ -35,9 +32,6 @@ class _HomeState extends State<Home> {
     NotelistAppBar(),
     null,
     null,
-    null,
-    null,
-    null
   ];
 
   final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
@@ -69,7 +63,7 @@ class _HomeState extends State<Home> {
         selectedItemColor: whiteSelectedIcon,
         unselectedItemColor: greyUnselectedIcon,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex <= 3 ? _selectedIndex : 0,
+        currentIndex: _selectedIndex,
         onTap: (int index) => setState(() {
           _selectedIndex = index;
         }),
@@ -79,15 +73,14 @@ class _HomeState extends State<Home> {
           showDialog<Widget>(
             context: context,
             child: CreateElementPopup(),
-          ).then(
-            (Widget page) {
+          ).then((Widget page) {
+            if (page != null)
               Navigator.push<Widget>(
                 context,
                 MaterialPageRoute<Widget>(
                     builder: (BuildContext context) => page),
               );
-            },
-          );
+          });
         },
         child: const Icon(Icons.add),
         backgroundColor: blue,

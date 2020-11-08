@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/views/new_element/create_task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:FL1_Norbert/views/quick_notes/add_quick_note.dart';
@@ -13,7 +14,7 @@ class CreateElementPopup extends StatelessWidget {
           Container(
             width: double.infinity,
             child: TextButton(
-              onPressed: () => Navigator.pop(context, 4),
+              onPressed: () => Navigator.pop(context, CreateTask()),
               child: const Text('Nouvelle tâche'),
             ),
           ),
@@ -21,12 +22,6 @@ class CreateElementPopup extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => Navigator.pop(context, AddQuickNote()),
-              // onPressed: () => Navigator.push(
-              //   context,
-              //   MaterialPageRoute<Widget>(
-              //     builder: (BuildContext context) => AddQuickNote(),
-              //   ),
-              // ),
               child: const Text('Nouvelle note'),
             ),
           ),
@@ -34,12 +29,6 @@ class CreateElementPopup extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => Navigator.pop(context, AddCheckList()),
-              // onPressed: () => Navigator.push(
-              //   context,
-              //   MaterialPageRoute<Widget>(
-              //     builder: (BuildContext context) => AddCheckList(),
-              //   ),
-              // ),
               child: const Text('Nouvelle check-list'),
             ),
           ),
