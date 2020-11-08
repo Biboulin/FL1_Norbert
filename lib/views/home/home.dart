@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
     TaskAppBar(),
     ProjectAppBar(),
     NotelistAppBar(),
-    QuickNoteList(),
+    null,
     ProfileAppBar(),
     null,
     null,
