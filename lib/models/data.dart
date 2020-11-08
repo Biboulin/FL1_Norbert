@@ -20,6 +20,7 @@ class Data with ChangeNotifier {
   FilterTask _filterTaskState;
   final List<User> _users = <User>[];
   final List<Project> _projects = <Project>[];
+  final List<Project> _userProjects = <Project>[];
   final List<QuickNotes> _notes = <QuickNotes>[];
 
   User get currentUser => _currentUser;
@@ -29,6 +30,7 @@ class Data with ChangeNotifier {
   FilterTask get filterTastState => _filterTaskState;
   List<User> get users => _users;
   List<Project> get projects => _projects;
+  List<Project> get userProjects => _userProjects;
 
   void setUsr(User usr) => _currentUser = usr;
   void setNotes(QuickNotes notes) => _notes.add(notes);
@@ -54,6 +56,25 @@ class Data with ChangeNotifier {
       ..clear()
       ..addAll(tasksToAdd);
     print(tasksToAdd.length);
+    notifyListeners();
+  }
+
+  void addProjects(List<Project> projectsToAdd) {
+    _projects
+      ..clear()
+      ..addAll(projectsToAdd);
+    //notifyListeners();
+  }
+
+  void addUserProjects(List<Project> projectsToAdd) {
+    _userProjects
+      ..clear()
+      ..addAll(projectsToAdd);
+    //notifyListeners();
+  }
+
+  void addUserProject(Project project) {
+    _userProjects.add(project);
     notifyListeners();
   }
 
