@@ -32,14 +32,14 @@ class _ProjectViewState extends State<ProjectView> {
           } else if (snapshot.connectionState == ConnectionState.done) {
             context.watch<Data>().addProjects(snapshot.data[0]);
             context.watch<Data>().addUserProjects(getUserProjects(context));
-            return Column(children: [
+            return Column(children: <Widget>[
               Expanded(
                 child: GridView.count(
                   // crossAxisCount is the number of columns
                   crossAxisCount: 2,
                   // This creates two columns with two items in each column
-                  children: List.generate(
-                      context.watch<Data>().userProjects.length, (index) {
+                  children: List<Widget>.generate(
+                      context.watch<Data>().userProjects.length, (int index) {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Material(
@@ -50,7 +50,7 @@ class _ProjectViewState extends State<ProjectView> {
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20.0),
                                 child: Icon(Icons.circle,
