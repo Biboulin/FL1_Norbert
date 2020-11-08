@@ -2,6 +2,7 @@ import 'package:FL1_Norbert/__mock__/projects_mock.dart';
 import 'package:FL1_Norbert/__mock__/tasks_mock.dart';
 import 'package:FL1_Norbert/__mock__/users_mock.dart';
 import 'package:FL1_Norbert/models/project.dart';
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:FL1_Norbert/models/task/task_enum.dart';
 import 'package:FL1_Norbert/models/task/task_helpers.dart';
 import 'package:FL1_Norbert/models/user.dart';
@@ -24,15 +25,18 @@ class Data with ChangeNotifier {
   FilterTask _filterTaskState;
   final List<User> _users = <User>[];
   final List<Project> _projects = <Project>[];
+  final List<QuickNotes> _notes = <QuickNotes>[];
 
   User get currentUser => _currentUser;
   List<Task> get tasks => _tasks;
   List<Task> get displayTasks => _displayTasks;
+  List<QuickNotes> get notes => _notes;
   FilterTask get filterTastState => _filterTaskState;
   List<User> get users => _users;
   List<Project> get projects => _projects;
 
   void setUsr(User usr) => _currentUser = usr;
+  void setNotes(QuickNotes notes) => _notes.add(notes);
 
   void addNotes(String noteId) {
     _currentUser.quickNoteIds.add(noteId);

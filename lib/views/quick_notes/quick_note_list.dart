@@ -1,8 +1,8 @@
 import 'package:FL1_Norbert/models/quick_notes.dart';
-import 'package:FL1_Norbert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:FL1_Norbert/views/quick_notes/notes_row.dart';
+import 'package:FL1_Norbert/views/quick_notes/checklist_row.dart';
 import 'package:FL1_Norbert/models/data.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,18 +20,14 @@ class _QuickNoteListState extends State<QuickNoteList> {
   final CollectionReference quickNotes =
       FirebaseFirestore.instance.collection('quickNotes');
 
-  void fillNotes(List<String> notesId) async {
+  Future<List<QuickNotes>> fillNotes(List<String> notesId) async {
     //User currentUser = context.read<Data>().currentUser;
 
     for (int i = 0; i < notesId.length; i++) {
-      // quickNotes.doc(user.quickNoteIds[i]).get().then((DocumentSnapshot snapshot) {
-      //   var test = snapshot;
-      //   print(test);
-      // });
-      var res = await quickNotes.doc(notesId[i]).get();
-      dynamic dbNote = res.data();
-      print(dbNote);
-      QuickNotes newNote = QuickNotes(
+      final DocumentSnapshot res = await quickNotes.doc(notesId[i]).get();
+      final Map<String, dynamic> dbNote = res.data();
+
+      final QuickNotes newNote = QuickNotes(
         description: dbNote['description'] as String,
         color: dbNote['color'] as String,
         type: dbNote['type'] as String,
@@ -39,30 +35,62 @@ class _QuickNoteListState extends State<QuickNoteList> {
 
       notes.add(newNote);
     }
+    return notes;
   }
 
   @override
   void initState() {
     // List<String> allNotes = context.watch<Data>().currentUser.quickNoteIds;
-    // fillNotes(allNotes);
+    //context.read<Data>().notes.clear();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //fillNotes(allNotes);
-    List<String> allNotes = context.watch<Data>().currentUser.quickNoteIds;
+    final List<QuickNotes> allNotes = context.watch<Data>().notes;
 
-    fillNotes(allNotes);
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
       child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: allNotes.length,
-        //itemCount: 5,
-        itemBuilder: (BuildContext context, int index) =>
-            NotesRow(description: notes[index].description),
-      ),
+          shrinkWrap: true,
+          itemCount: allNotes.length,
+          //itemCount: 5,
+          itemBuilder: (BuildContext context, int index) {
+            if (allNotes[index].type == 'quick') {
+              return NotesRow(
+                description: allNotes[index].description,
+                noteColor: allNotes[index].color,
+                type: allNotes[index].type,
+              );
+            } else if (allNotes[index].type == 'checklist') {
+              return CheckListRow(
+                title: allNotes[index].title,
+                description: allNotes[index].description,
+                noteColor: allNotes[index].color,
+                type: allNotes[index].type,
+                items: allNotes[index].items,
+              );
+            }
+            return null;
+          }),
+
+      // return FutureBuilder(
+      //   future: fillNotes(allNotes),
+      //   builder:
+      //       (BuildContext context, AsyncSnapshot<List<QuickNotes>> snapshot) {
+      //     List<QuickNotes> displayedNotes = snapshot.data;
+      //     return Padding(
+      //       padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+      //       child: ListView.builder(
+      //         shrinkWrap: true,
+      //         itemCount: allNotes.length,
+      //         //itemCount: 5,
+      //         itemBuilder: (BuildContext context, int index) =>
+      //             NotesRow(description: displayedNotes[index].description),
+      //       ),
+      //     );
+      //   },
+      // );
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:FL1_Norbert/models/user.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -123,9 +124,9 @@ class _AddQuickNoteState extends State<AddQuickNote> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        if (selected != 'red') {
+                                        if (selected != 'paleRed') {
                                           setState(() {
-                                            selected = 'red';
+                                            selected = 'paleRed';
                                           });
                                         } else {
                                           setState(() {
@@ -144,7 +145,7 @@ class _AddQuickNoteState extends State<AddQuickNote> {
                                               BorderRadius.circular(5),
                                           color: paleRed,
                                           border: Border.all(
-                                            color: selected == 'red'
+                                            color: selected == 'paleRed'
                                                 ? blueAppBar
                                                 : Colors.transparent,
                                             width: 3.0,
@@ -185,9 +186,9 @@ class _AddQuickNoteState extends State<AddQuickNote> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        if (selected != 'black') {
+                                        if (selected != 'paleBlack') {
                                           setState(() {
-                                            selected = 'black';
+                                            selected = 'paleBlack';
                                           });
                                         } else {
                                           setState(() {
@@ -206,7 +207,7 @@ class _AddQuickNoteState extends State<AddQuickNote> {
                                               BorderRadius.circular(5),
                                           color: paleBlack,
                                           border: Border.all(
-                                            color: selected == 'black'
+                                            color: selected == 'paleBlack'
                                                 ? blueAppBar
                                                 : Colors.transparent,
                                             width: 3.0,
@@ -289,6 +290,14 @@ class _AddQuickNoteState extends State<AddQuickNote> {
                                             final DocumentReference newNote =
                                                 await quickNotes.add(quickNote);
 
+                                            final QuickNotes tmp = QuickNotes(
+                                              description:
+                                                  descriptionController.text,
+                                              color: selected,
+                                              type: 'quick',
+                                            );
+
+                                            context.read<Data>().setNotes(tmp);
                                             if (newNote.id != null) {
                                               // add quicknote id to currentUser in provider + update user data in firestore
 

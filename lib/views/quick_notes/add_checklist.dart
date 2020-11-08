@@ -378,6 +378,16 @@ class _AddCheckListState extends State<AddCheckList> {
                                             final DocumentReference newNote =
                                                 await quickNotes.add(quickNote);
 
+                                            final QuickNotes tmp = QuickNotes(
+                                              title: titleController.text,
+                                              description:
+                                                  descriptionController.text,
+                                              color: selected,
+                                              type: 'checklist',
+                                            );
+
+                                            context.read<Data>().setNotes(tmp);
+
                                             if (newNote.id != null) {
                                               // Get db user
                                               final DocumentReference dbUsr =

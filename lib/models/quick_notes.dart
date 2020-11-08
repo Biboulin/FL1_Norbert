@@ -6,7 +6,8 @@ class QuickNotes {
       this.userId,
       this.type,
       this.items,
-      this.createdAt});
+      this.createdAt,
+      this.title});
 
   QuickNotes.fromJson(Map<String, dynamic> json) {
     id = json['id'] as String;
@@ -24,6 +25,7 @@ class QuickNotes {
   }
 
   String id;
+  String title;
   String description;
   String color;
   String userId;

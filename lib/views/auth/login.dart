@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -222,16 +223,20 @@ class _LoginState extends State<Login> {
                                       email: emailController.text,
                                       password: passwordController.text,
                                     );
-                                    // final Map<String, dynamic> usrData =
-                                    // <String, dynamic>{
-                                    //   'firstName': authResult.user.displayName,
-                                    //   'lastName':
-                                    //   'email': authResult.user.email,
-                                    //   'firebaseId': authResult.user.uid,
-                                    // };
+
+                                    context.read<Data>().setUsr(null);
+                                    context.read<Data>().notes.clear();
+                                    context.read<Data>().tasks.clear();
+                                    context.read<Data>().displayTasks.clear();
+                                    context.read<Data>().projects.clear();
+
                                     final CollectionReference users =
                                         FirebaseFirestore.instance
                                             .collection('users');
+
+                                    final CollectionReference notesCollection =
+                                        FirebaseFirestore.instance
+                                            .collection('quickNotes');
 
                                     final QuerySnapshot exists = await users
                                         .where(
@@ -240,11 +245,30 @@ class _LoginState extends State<Login> {
                                         )
                                         .get();
 
-                                    Map<String, dynamic> data =
+                                    final Map<String, dynamic> data =
                                         exists.docs[0].data();
 
-                                    final dynamic notes = data['_quickNotes'];
+                                    final List<dynamic> notes =
+                                        data['_quickNotes'] as List<dynamic>;
                                     final dynamic projects = data['_projects'];
+
+                                    for (int i = 0; i < notes.length; i++) {
+                                      final DocumentSnapshot res =
+                                          await notesCollection
+                                              .doc(notes[i] as String)
+                                              .get();
+
+                                      final dynamic dbNote = res.data();
+                                      print(dbNote);
+                                      final QuickNotes newNote = QuickNotes(
+                                        description:
+                                            dbNote['description'] as String,
+                                        color: dbNote['color'] as String,
+                                        type: dbNote['type'] as String,
+                                      );
+
+                                      context.read<Data>().setNotes(newNote);
+                                    }
 
                                     final Map<String, dynamic> usrData =
                                         <String, dynamic>{
