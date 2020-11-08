@@ -1,11 +1,11 @@
 class Project {
   Project({this.id, this.name, this.color, this.userId});
 
-  Project.fromJson(Map<String, String> json) {
-    id = json['id'];
-    name = json['name'];
-    color = json['color'];
-    userId = json['_user'];
+  Project.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as String;
+    name = json['name'] as String;
+    color = json['color'] as String;
+    userId = json['_user'] as String;
   }
 
   String id;

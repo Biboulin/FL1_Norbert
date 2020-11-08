@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:FL1_Norbert/utils/colors.dart';
@@ -487,7 +488,7 @@ class _RegisterState extends State<Register> {
                                   'firstName': authResult.user.displayName,
                                   'email': authResult.user.email,
                                   'firebaseId': authResult.user.uid,
-                                  '_quickNotes': null
+                                  //'_quickNotes': null,
                                 };
 
                                 final CollectionReference users =
@@ -508,24 +509,75 @@ class _RegisterState extends State<Register> {
                                     () => res.id,
                                   );
                                 } else {
+                                  context.read<Data>().setUsr(null);
+                                  context.read<Data>().notes.clear();
+                                  context.read<Data>().tasks.clear();
+                                  context.read<Data>().displayTasks.clear();
+                                  context.read<Data>().projects.clear();
+
+                                  final Map<String, dynamic> data =
+                                      exists.docs[0].data();
+
+                                  final CollectionReference notesCollection =
+                                      FirebaseFirestore.instance
+                                          .collection('quickNotes');
+
+                                  // final List<String> notes =
+                                  //     data['_quickNotes'] as List<String>;
+
+                                  final List<dynamic> notes =
+                                      data['_quickNotes'] as List<dynamic>;
+                                  final dynamic projects = data['_projects'];
+                                  print(notes);
+
+                                  for (int i = 0; i < notes.length; i++) {
+                                    final DocumentSnapshot res =
+                                        await notesCollection
+                                            .doc(notes[i] as String)
+                                            .get();
+
+                                    final Map<String, dynamic> dbNote =
+                                        res.data();
+
+                                    final QuickNotes newNote = QuickNotes(
+                                      description:
+                                          dbNote['description'] as String,
+                                      color: dbNote['color'] as String,
+                                      type: dbNote['type'] as String,
+                                    );
+                                    context.read<Data>().setNotes(newNote);
+                                  }
                                   usrData.putIfAbsent(
                                     'id',
                                     () => exists.docs[0].id,
                                   );
+                                  // usrData.putIfAbsent(
+                                  //   '_quickNotes',
+                                  //   () => notes,
+                                  // );
+                                  //usrData.update('key', (value) => null)
+                                  usrData['_quickNotes'] = notes;
+                                  usrData['_projects'] = projects;
+                                  print(usrData);
+                                  final user.User currentUser =
+                                      user.User.fromJson(usrData);
+                                  context.read<Data>().setUsr(currentUser);
+
+                                  Navigator.push<Widget>(
+                                    context,
+                                    MaterialPageRoute<Widget>(
+                                      builder: (BuildContext context) =>
+                                          const Home(),
+                                    ),
+                                  );
+                                  // try {
+                                  // } on Exception catch (e) {
+                                  //   print(e);
+                                  // }
                                 }
 
                                 // Save current user to provider
-                                final user.User currentUser =
-                                    user.User.fromJson(usrData);
 
-                                context.read<Data>().setUsr(currentUser);
-                                Navigator.push<Widget>(
-                                  context,
-                                  MaterialPageRoute<Widget>(
-                                    builder: (BuildContext context) =>
-                                        const Home(),
-                                  ),
-                                );
                               }
                             },
                             text: "S'identifier avec Google",

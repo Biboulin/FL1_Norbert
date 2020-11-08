@@ -1,19 +1,15 @@
 import 'package:FL1_Norbert/__mock__/projects_mock.dart';
-import 'package:FL1_Norbert/__mock__/tasks_mock.dart';
-import 'package:FL1_Norbert/__mock__/users_mock.dart';
 import 'package:FL1_Norbert/models/project.dart';
+import 'package:FL1_Norbert/models/quick_notes.dart';
 import 'package:FL1_Norbert/models/task/task_enum.dart';
-import 'package:FL1_Norbert/models/task/task_helpers.dart';
 import 'package:FL1_Norbert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'task/task.dart';
 
 class Data with ChangeNotifier {
   Data() {
-    _tasks.addAll(orderTasksByDate(tasksMock));
-    _displayTasks.addAll(orderTasksByDate(tasksMock));
     _filterTaskState = FilterTask.all;
-    _users.addAll(usersMock);
+    //_users.addAll(usersMock);
     _projects.addAll(projectsMock);
   }
 
@@ -24,17 +20,25 @@ class Data with ChangeNotifier {
   FilterTask _filterTaskState;
   final List<User> _users = <User>[];
   final List<Project> _projects = <Project>[];
+  final List<Project> _userProjects = <Project>[];
+  final List<QuickNotes> _notes = <QuickNotes>[];
 
   User get currentUser => _currentUser;
   List<Task> get tasks => _tasks;
   List<Task> get displayTasks => _displayTasks;
+  List<QuickNotes> get notes => _notes;
   FilterTask get filterTastState => _filterTaskState;
   List<User> get users => _users;
   List<Project> get projects => _projects;
+  List<Project> get userProjects => _userProjects;
 
   void setUsr(User usr) => _currentUser = usr;
+  void setNotes(QuickNotes notes) => _notes.add(notes);
 
-  void addNotes(String noteId) => _currentUser.quickNoteIds.add(noteId);
+  void addNotes(String noteId) {
+    _currentUser.quickNoteIds.add(noteId);
+    notifyListeners();
+  }
 
   void delTasks(List<Task> tasksToDel) {
     for (final Task task in tasksToDel) {
@@ -45,8 +49,32 @@ class Data with ChangeNotifier {
   }
 
   void addTasks(List<Task> tasksToAdd) {
-    _tasks.addAll(tasksToAdd);
-    _displayTasks.addAll(tasksToAdd);
+    _tasks
+      ..clear()
+      ..addAll(tasksToAdd);
+    _displayTasks
+      ..clear()
+      ..addAll(tasksToAdd);
+    print(tasksToAdd.length);
+    notifyListeners();
+  }
+
+  void addProjects(List<Project> projectsToAdd) {
+    _projects
+      ..clear()
+      ..addAll(projectsToAdd);
+    //notifyListeners();
+  }
+
+  void addUserProjects(List<Project> projectsToAdd) {
+    _userProjects
+      ..clear()
+      ..addAll(projectsToAdd);
+    //notifyListeners();
+  }
+
+  void addUserProject(Project project) {
+    _userProjects.add(project);
     notifyListeners();
   }
 
@@ -70,6 +98,15 @@ class Data with ChangeNotifier {
       default:
     }
     notifyListeners();
+  }
+
+  void setUsers(List<User> user) {
+    _users.addAll(user);
+  }
+
+  void setTasks(List<Task> task) {
+    _tasks.addAll(task);
+    _displayTasks.addAll(task);
   }
 
   void notify() => notifyListeners();
