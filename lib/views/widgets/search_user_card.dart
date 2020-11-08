@@ -18,7 +18,9 @@ class SearchUserCard extends StatelessWidget {
           child: const Icon(Icons.person),
           backgroundColor: Colors.grey[200],
         ),
-        title: Text(_user.firstName + ' ' + _user.lastName),
+        title: _user.lastName != null
+            ? Text(_user.firstName + ' ' + _user.lastName)
+            : Text(_user.firstName),
         subtitle: Text(_user.email),
       ),
     );
