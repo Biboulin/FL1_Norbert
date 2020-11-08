@@ -71,11 +71,12 @@ class _HomeState extends State<Home> {
             context: context,
             child: CreateElementPopup(),
           ).then((Widget page) {
-            Navigator.push<Widget>(
-              context,
-              MaterialPageRoute<Widget>(
-                  builder: (BuildContext context) => page),
-            );
+            if (page != null)
+              Navigator.push<Widget>(
+                context,
+                MaterialPageRoute<Widget>(
+                    builder: (BuildContext context) => page),
+              );
           });
         },
         child: const Icon(Icons.add),
