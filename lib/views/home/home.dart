@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _views = <Widget>[
     TasksView(),
     ProjectView(),
-    const Center(child: Text('notes')),
+    QuickNoteList(),
     ProfileView(),
     const Center(child: Text('new task')),
     const Center(child: Text('new note')),

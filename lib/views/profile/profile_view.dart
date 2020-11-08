@@ -1,11 +1,17 @@
+import 'dart:io';
 import 'package:FL1_Norbert/models/data.dart';
 import 'package:FL1_Norbert/models/project.dart';
 import 'package:FL1_Norbert/services/project.dart';
+import 'package:FL1_Norbert/services/task.dart';
 import 'package:FL1_Norbert/utils/functions.dart';
+import 'package:FL1_Norbert/views/new_element/select_image_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -14,6 +20,9 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   Future<List<Project>> _getAllProjects;
+
+  File _image;
+  final ImagePicker picker = ImagePicker();
 
   @override
   void initState() {
@@ -32,7 +41,7 @@ class _ProfileViewState extends State<ProfileView> {
           borderRadius: BorderRadius.circular(5),
           child: Container(
               child: Column(
-            children: [
+            children: <Widget>[
               const Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
@@ -50,15 +59,45 @@ class _ProfileViewState extends State<ProfileView> {
                       height: 80,
                       width: 80,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset('assets/images/chat_cactus.jpg',
-                            fit: BoxFit.cover),
-                        //Image.memory(
-                        //const Base64Decoder()
-                        //   .convert(context.watch<Data>().user.image),
-                        //fit: BoxFit.cover,
-                        //),
-                      ),
+                          borderRadius: BorderRadius.circular(50),
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog<ImageSource>(
+                                context: context,
+                                child: SelectImageDialog(),
+                              ).then((ImageSource source) {
+                                _getImage(source);
+                                uploadImageToFirebase(context, _image)
+                                    .then((String link) {
+                                  context.watch<Data>().currentUser.image =
+                                      link;
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(context.watch<Data>().currentUser.id)
+                                      .set(context
+                                          .watch<Data>()
+                                          .currentUser
+                                          .toJson());
+                                });
+                              });
+                            },
+                            child:
+                                context.watch<Data>().currentUser.image != null
+                                    ? Image.network(
+                                        context.watch<Data>().currentUser.image,
+                                        //'assets/images/chat_cactus.jpg',
+                                        fit: BoxFit.cover,
+                                      )
+                                    : const CircleAvatar(
+                                        child: Icon(Icons.person),
+                                      ),
+                          )
+                          //Image.memory(
+                          //const Base64Decoder()
+                          //   .convert(context.watch<Data>().user.image),
+                          //fit: BoxFit.cover,
+                          //),
+                          ),
                     ),
                   ),
                   Padding(
@@ -294,5 +333,17 @@ class _ProfileViewState extends State<ProfileView> {
             return const Text('loading');
           }),
     ]);
+  }
+
+  Future<void> _getImage(ImageSource source) async {
+    if (source != null) {
+      final PickedFile pickedFile = await picker.getImage(source: source);
+
+      setState(() {
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+        }
+      });
+    }
   }
 }
