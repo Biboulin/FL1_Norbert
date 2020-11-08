@@ -2,8 +2,8 @@ import 'package:FL1_Norbert/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class UserToolTip extends StatelessWidget {
-  const UserToolTip(this._user);
+class AssigneeToolTip extends StatelessWidget {
+  const AssigneeToolTip(this._user);
 
   final User _user;
 
@@ -18,9 +18,11 @@ class UserToolTip extends StatelessWidget {
             child: Icon(Icons.person),
           ),
         ),
-        Text(
-          _user.firstName,
-          overflow: TextOverflow.fade,
+        Expanded(
+          child: Text(
+            _user.firstName,
+            overflow: TextOverflow.fade,
+          ),
         ),
       ],
     );

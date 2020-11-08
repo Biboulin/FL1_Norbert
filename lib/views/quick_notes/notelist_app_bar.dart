@@ -10,7 +10,7 @@ class NotelistAppBar extends StatelessWidget with PreferredSizeWidget {
       elevation: 1,
       centerTitle: true,
       title: const Text(
-        'Quick Notes',
+        'Notes',
         style: TextStyle(
           color: Colors.black,
           fontFamily: 'Montserrat',

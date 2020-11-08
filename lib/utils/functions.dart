@@ -1,3 +1,4 @@
+import 'package:FL1_Norbert/models/user.dart';
 import 'package:flutter/material.dart';
 
 Color getColor(String color) {
@@ -23,4 +24,8 @@ Color getColor(String color) {
     default:
       return Colors.transparent;
   }
+}
+
+User getUserById(List<User> users, String id) {
+  return users.firstWhere((User element) => element.id == id);
 }
