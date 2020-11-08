@@ -1,7 +1,7 @@
 import 'package:FL1_Norbert/utils/colors.dart';
-import 'package:FL1_Norbert/views/home/create_element_popup.dart';
 import 'package:FL1_Norbert/views/profile/profile_app_bar.dart';
 import 'package:FL1_Norbert/views/profile/profile_view.dart';
+import 'package:FL1_Norbert/views/new_element/create_element_popup.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:flutter/material.dart';
@@ -68,17 +68,24 @@ class _HomeState extends State<Home> {
         selectedItemColor: whiteSelectedIcon,
         unselectedItemColor: greyUnselectedIcon,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex <= 3 ? _selectedIndex : 0,
+        currentIndex: _selectedIndex,
         onTap: (int index) => setState(() {
           _selectedIndex = index;
         }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog<int>(
+          showDialog<Widget>(
             context: context,
             child: CreateElementPopup(),
-          ).then((int index) => setState(() => _selectedIndex = index));
+          ).then((Widget page) {
+            if (page != null)
+              Navigator.push<Widget>(
+                context,
+                MaterialPageRoute<Widget>(
+                    builder: (BuildContext context) => page),
+              );
+          });
         },
         child: const Icon(Icons.add),
         backgroundColor: blue,

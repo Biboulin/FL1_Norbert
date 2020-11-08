@@ -1,5 +1,7 @@
+import 'package:FL1_Norbert/__mock__/projects_mock.dart';
 import 'package:FL1_Norbert/__mock__/tasks_mock.dart';
-import 'package:FL1_Norbert/__mock__/user_mock.dart';
+import 'package:FL1_Norbert/__mock__/users_mock.dart';
+import 'package:FL1_Norbert/models/project.dart';
 import 'package:FL1_Norbert/models/task/task_enum.dart';
 import 'package:FL1_Norbert/models/task/task_helpers.dart';
 import 'package:FL1_Norbert/models/user.dart';
@@ -11,20 +13,21 @@ class Data with ChangeNotifier {
     _tasks.addAll(orderTasksByDate(tasksMock));
     _displayTasks.addAll(orderTasksByDate(tasksMock));
     _filterTaskState = FilterTask.all;
-    _user = userMock;
-    print("COUCOU");
-    print(_filterTaskState);
+    _users.addAll(usersMock);
+    _projects.addAll(projectsMock);
   }
 
   final List<Task> _tasks = <Task>[];
   final List<Task> _displayTasks = <Task>[];
   FilterTask _filterTaskState;
-  User _user;
+  final List<User> _users = <User>[];
+  final List<Project> _projects = <Project>[];
 
   List<Task> get tasks => _tasks;
   List<Task> get displayTasks => _displayTasks;
   FilterTask get filterTastState => _filterTaskState;
-  User get user => _user;
+  List<User> get users => _users;
+  List<Project> get projects => _projects;
 
   void delTasks(List<Task> tasksToDel) {
     for (final Task task in tasksToDel) {
