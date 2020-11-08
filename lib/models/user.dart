@@ -28,15 +28,17 @@ class User {
       });
     }
     if (json['_quickNotes'] != null) {
+      print(json['_quickNotes']);
       taskIds = <String>[];
-      json['_quickNotes'].forEach((String v) {
-        quickNoteIds.add(v);
+      json['_quickNotes'].forEach((dynamic v) {
+        print(v);
+        quickNoteIds.add(v as String);
       });
     }
     if (json['_projects'] != null) {
       projectIds = <String>[];
-      json['_projects'].forEach((String v) {
-        projectIds.add(v);
+      json['_projects'].forEach((dynamic v) {
+        projectIds.add(v as String);
       });
     }
   }
@@ -67,7 +69,7 @@ class User {
       data['_tasks'] = taskIds.map((String v) => v).toList();
     }
     if (quickNoteIds != null) {
-      data['_tasks'] = quickNoteIds.map((String v) => v).toList();
+      data['_quickNotes'] = quickNoteIds.map((String v) => v).toList();
     }
     if (projectIds != null) {
       data['_projects'] = projectIds.map((String v) => v).toList();
