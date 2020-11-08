@@ -28,6 +28,7 @@ class User {
       });
     }
     if (json['_quickNotes'] != null) {
+      print(json['_quickNotes']);
       taskIds = <String>[];
       json['_quickNotes'].forEach((dynamic v) {
         quickNoteIds.add(v as String);
@@ -67,7 +68,7 @@ class User {
       data['_tasks'] = taskIds.map((dynamic v) => v as String).toList();
     }
     if (quickNoteIds != null) {
-      data['_tasks'] = quickNoteIds.map((dynamic v) => v as String).toList();
+      data['_quickNotes'] = quickNoteIds.map((String v) => v).toList();
     }
     if (projectIds != null) {
       data['_projects'] = projectIds.map((dynamic v) => v as String).toList();
