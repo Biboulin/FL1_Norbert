@@ -57,7 +57,7 @@ class _ProfileViewState extends State<ProfileView> {
                       width: 80,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(context.watch<Data>().user.image,
+                        child: Image.asset('assets/images/chat_cactus.jpg',
                             fit: BoxFit.cover),
                         //Image.memory(
                         //const Base64Decoder()
@@ -73,11 +73,11 @@ class _ProfileViewState extends State<ProfileView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            context.watch<Data>().user.firstName +
+                            context.watch<Data>().users[0].firstName +
                                 ' ' +
-                                context.watch<Data>().user.lastName,
+                                context.watch<Data>().users[0].lastName,
                             style: const TextStyle(fontSize: 20)),
-                        Text(context.watch<Data>().user.email,
+                        Text(context.watch<Data>().users[0].email,
                             style: const TextStyle(
                                 color: Colors.grey, fontSize: 17)),
                       ],
