@@ -1,5 +1,7 @@
 import 'package:FL1_Norbert/utils/colors.dart';
 import 'package:FL1_Norbert/views/home/create_element_popup.dart';
+import 'package:FL1_Norbert/views/profile/profile_app_bar.dart';
+import 'package:FL1_Norbert/views/profile/profile_view.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_app_bar.dart';
 import 'package:FL1_Norbert/views/tasks/tasks_view.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class _HomeState extends State<Home> {
     TasksView(),
     const Center(child: Text('menu')),
     const Center(child: Text('notes')),
-    const Center(child: Text('profil')),
+    ProfileView(),
     const Center(child: Text('new task')),
     const Center(child: Text('new note')),
     const Center(child: Text('new checkList')),
@@ -31,7 +33,7 @@ class _HomeState extends State<Home> {
     TaskAppBar(),
     null,
     null,
-    null,
+    ProfileAppBar(),
     null,
     null,
     null

@@ -30,7 +30,8 @@ class _ViewSelectionState extends State<ViewSelection> {
 
   @override
   void initState() {
-    _selectedView = Welcome(handleRedirectRegister, handleRedirectLogin);
+    _selectedView =
+        Home(); //Welcome(handleRedirectRegister, handleRedirectLogin);
     super.initState();
   }
 
