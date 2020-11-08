@@ -9,6 +9,7 @@ class User {
       this.firebaseId,
       this.image,
       this.taskIds,
+      this.quickNoteIds,
       this.projectIds});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -24,6 +25,12 @@ class User {
       taskIds = <String>[];
       json['_tasks'].forEach((String v) {
         taskIds.add(v);
+      });
+    }
+    if (json['_quickNotes'] != null) {
+      taskIds = <String>[];
+      json['_quickNotes'].forEach((String v) {
+        quickNoteIds.add(v);
       });
     }
     if (json['_projects'] != null) {
@@ -43,6 +50,7 @@ class User {
   String firebaseId;
   String image;
   List<String> taskIds;
+  List<String> quickNoteIds = <String>[];
   List<String> projectIds;
 
   Map<String, dynamic> toJson() {
@@ -57,6 +65,9 @@ class User {
     data['image'] = image;
     if (taskIds != null) {
       data['_tasks'] = taskIds.map((String v) => v).toList();
+    }
+    if (quickNoteIds != null) {
+      data['_tasks'] = quickNoteIds.map((String v) => v).toList();
     }
     if (projectIds != null) {
       data['_projects'] = projectIds.map((String v) => v).toList();

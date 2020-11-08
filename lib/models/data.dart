@@ -18,16 +18,23 @@ class Data with ChangeNotifier {
   }
 
   final List<Task> _tasks = <Task>[];
+  //final List<ListItem> _items = <ListItem>[];
   final List<Task> _displayTasks = <Task>[];
+  User _currentUser = User(quickNoteIds: <String>[]);
   FilterTask _filterTaskState;
   final List<User> _users = <User>[];
   final List<Project> _projects = <Project>[];
 
+  User get currentUser => _currentUser;
   List<Task> get tasks => _tasks;
   List<Task> get displayTasks => _displayTasks;
   FilterTask get filterTastState => _filterTaskState;
   List<User> get users => _users;
   List<Project> get projects => _projects;
+
+  void setUsr(User usr) => _currentUser = usr;
+
+  void addNotes(String noteId) => _currentUser.quickNoteIds.add(noteId);
 
   void delTasks(List<Task> tasksToDel) {
     for (final Task task in tasksToDel) {
