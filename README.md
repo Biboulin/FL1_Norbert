@@ -6,7 +6,7 @@ Flutter project for Epitech module
 
 Ce projet est une application crossplateform, permettant de créer, planifier et gérer des taches
 
-Vous pouvez trouver la dernière version de l'APK Android sur ce lien : https://codemagic.io/app/5fa7ddb197db29131177e49a/build/5fa8025d29657a00129740ac
+Vous pouvez trouver la dernière version de l'APK Android sur ce lien : https://codemagic.io/app/5fa7ddb197db29131177e49a/build/5fa874b729657a000f9740c2
 
 Afin de lancer le projet vous pouvez: 
 
