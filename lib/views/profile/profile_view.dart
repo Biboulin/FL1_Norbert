@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:FL1_Norbert/models/data.dart';
 import 'package:FL1_Norbert/models/project.dart';
+import 'package:FL1_Norbert/models/user.dart';
 import 'package:FL1_Norbert/services/project.dart';
 import 'package:FL1_Norbert/services/task.dart';
+import 'package:FL1_Norbert/services/users.dart';
 import 'package:FL1_Norbert/utils/functions.dart';
 import 'package:FL1_Norbert/views/new_element/select_image_dialog.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   Future<List<Project>> _getAllProjects;
+  Future<DocumentSnapshot> _getUser;
 
   File _image;
   final ImagePicker picker = ImagePicker();
@@ -27,10 +30,12 @@ class _ProfileViewState extends State<ProfileView> {
   void initState() {
     super.initState();
     _getAllProjects = getAllProjects(context);
+    _getUser = getUser(context.read<Data>().currentUser.id);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(context.watch<Data>().currentUser.image);
     //print(context.watch<Data>().user.image);
     return SingleChildScrollView(
       child: Column(children: <Widget>[
@@ -60,43 +65,63 @@ class _ProfileViewState extends State<ProfileView> {
                         width: 80,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialog<ImageSource>(
-                                  context: context,
-                                  child: SelectImageDialog(),
-                                ).then((ImageSource source) {
-                                  _getImage(source).then((_) {
-                                    uploadImageToFirebase(context, _image)
-                                        .then((String link) {
-                                      print(link);
-                                      context.watch<Data>().currentUser.image =
-                                          link;
-                                      FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(context
-                                              .watch<Data>()
-                                              .currentUser
-                                              .id)
-                                          .set(context
-                                              .watch<Data>()
-                                              .currentUser
-                                              .toJson());
-                                    });
-                                  });
-                                });
-                              },
-                              child: context.watch<Data>().currentUser.image !=
-                                      null
-                                  ? Image.network(
-                                      context.watch<Data>().currentUser.image,
-                                      //'assets/images/chat_cactus.jpg',
-                                      fit: BoxFit.cover,
-                                    )
-                                  : const CircleAvatar(
-                                      child: Icon(Icons.person),
-                                    ),
-                            )
+                            child: FutureBuilder<DocumentSnapshot>(
+                                future: _getUser,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    context.watch<Data>().setUsr(
+                                        User.fromJson(snapshot.data.data()));
+                                    return GestureDetector(
+                                      onTap: () {
+                                        showDialog<ImageSource>(
+                                          context: context,
+                                          child: SelectImageDialog(),
+                                        ).then((ImageSource source) {
+                                          _getImage(source).then((_) {
+                                            uploadImageToFirebase(
+                                                    context, _image)
+                                                .then((String link) {
+                                              context
+                                                  .read<Data>()
+                                                  .currentUser
+                                                  .image = link;
+                                              FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(context
+                                                      .read<Data>()
+                                                      .currentUser
+                                                      .id)
+                                                  .set(context
+                                                      .read<Data>()
+                                                      .currentUser
+                                                      .toJson());
+                                              context.read<Data>().notify();
+                                            });
+                                          });
+                                        });
+                                      },
+                                      child: context
+                                                  .watch<Data>()
+                                                  .currentUser
+                                                  .image !=
+                                              null
+                                          ? Image.network(
+                                              context
+                                                  .watch<Data>()
+                                                  .currentUser
+                                                  .image,
+                                              //'assets/images/chat_cactus.jpg',
+                                              fit: BoxFit.cover,
+                                            )
+                                          : const CircleAvatar(
+                                              child: Icon(Icons.person),
+                                            ),
+                                    );
+                                  }
+                                  return const CircularProgressIndicator();
+                                })
                             //Image.memory(
                             //const Base64Decoder()
                             //   .convert(context.watch<Data>().user.image),
